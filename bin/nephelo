@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+import nephelo
+import os
+import sys
+
+config = nephelo.configure()
+if config == None:
+    print "No Config File - Exiting"
+    sys.exit()
+
+args = sys.argv
+filepath = args.pop(0)
+if len(args) == 0:
+    print "Please pass through a command, e.g. nephelo deploy development"
+    sys.exit()
+
+command = args[0]
+
+if command == "deploy":
+    stage = args[1]
+    nephelo.deploy(config, stage)
+    sys.exit()
+elif command == "get":
+    segment = args[1]
+    stage = args[2]
+    print nephelo.get(config, segment, stage)
+    sys.exit()
+elif command == "help":
+    print "usage: nephelo deploy {stage} || nephelo get network {stage}"
+    sys.exit()
+else:
+    print "please type a command, try nephelo help"
+    sys.exit()
