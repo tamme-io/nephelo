@@ -14,5 +14,12 @@ setup(name='nephelo',
             'boto3',
             'netaddr'
       ],
+      include_package_data=True,
+      package_data={
+            'templates': [
+                  'templates/vpc.json',
+                  'templates/subnet.json'
+            ]
+      },
       scripts=['bin/nephelo'],
       zip_safe=False)
