@@ -37,6 +37,8 @@ ${variable} - this will be replaced with anything in the nephelo.json file
 
 !{subnets[0]} - will get a reference to the first subnet
 
+@@{ENV_VARIABLE}@@ - this will try to find an environment variable and replace, otherwise it will replace with an empty string
+
 %{ raw-subnet-ids as |subnet|, 
 		{TEMPLATE}
 	}% - will iterate over the subnet ids and create a thing, this should be able to be used with any array in the nephelo.json file
