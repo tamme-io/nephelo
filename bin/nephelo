@@ -19,16 +19,26 @@ command = args[0]
 
 if command == "deploy":
     stage = args[1]
+    config["stage"] = stage
     nephelo.deploy(config, stage)
     sys.exit()
 elif command == "get":
     segment = args[1]
     stage = args[2]
-    print nephelo.get(config, segment, stage)
+    config["stage"] = stage
+    print nephelo.get(filepath, config, segment, stage)
     sys.exit()
 elif command == "help":
     print "usage: nephelo deploy {stage} || nephelo get network {stage}"
     sys.exit()
+elif command == "save":
+    stage = args[1]
+    config["stage"] = stage
+    nephelo.save(config, stage)
+elif command == "delete":
+    stage = args[1]
+    config["stage"] = stage
+    nephelo.deleteStack(config, stage)
 else:
     print "please type a command, try nephelo help"
     sys.exit()

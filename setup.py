@@ -7,7 +7,10 @@ setup(name='nephelo',
       author='tamme',
       author_email='opensource@tamme.io',
       license='MIT',
-      packages=['nephelo'],
+      packages=[
+            'nephelo',
+            'netaddr'
+      ],
       install_requires=[
             'boto3'
       ],
