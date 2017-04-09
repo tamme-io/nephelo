@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='nephelo',
-      version='0.101',
+      version='0.102',
       description='A Cloud Formation library to more easily. Nephelo, short for Nephelococcygia, is the art of watching clouds.',
       url='https://github.com/tamme-io/nephelo',
       author='tamme',
@@ -14,9 +14,8 @@ setup(name='nephelo',
             'boto3',
             'netaddr'
       ],
-      include_package_data=True,
       package_data={
-            'templates': [
+            'nephelo': [
                   'templates/vpc.json',
                   'templates/subnet.json'
             ]
