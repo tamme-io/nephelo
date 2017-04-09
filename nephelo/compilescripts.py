@@ -89,6 +89,13 @@ def loadfile(libpath, path, replacementdict, reference_dict):
                 filestring = filestring.replace("!{subnets}", json.dumps(subnet_ids))
                 for index in range(len(reference_dict['subnet-ids'])):
                     filestring = filestring.replace("!{subnets[" + str(index) + "]}", reference_dict["subnet-ids"][index])
+            env_start = "@@{"
+            env_end = "}@@"
+            env_var_refs = re.findall(env_start + '(.*?)' + env_end, filestring, re.DOTALL)
+            print env_var_refs
+            for env_ref in env_var_refs:
+                replacement_value = os.environ.get(env_ref, "")
+                filestring = filestring.replace(env_start + env_ref + env_end, replacement_value)
             start = "@{"
             end = "}"
             # print "Reference Regex"
