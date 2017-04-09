@@ -8,11 +8,11 @@ setup(name='nephelo',
       author_email='opensource@tamme.io',
       license='MIT',
       packages=[
-            'nephelo',
-            'netaddr'
+            'nephelo'
       ],
       install_requires=[
-            'boto3'
+            'boto3',
+            'netaddr'
       ],
       scripts=['bin/nephelo'],
       zip_safe=False)
