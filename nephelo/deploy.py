@@ -18,13 +18,15 @@ def deploy(config, stage):
         cloudformation = boto3.client('cloudformation', region_name=region)
 
         # check if the stack exists in this region
+        disablerollback = config.get("disable_rollback", False)
         try:
             cloudformation.describe_stacks(
                 StackName=stack_name
             )
             stack_details = cloudformation.update_stack(
                 StackName=stack_name,
-                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json"
+                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
+                DisableRollback=disablerollback
             )
             # The stack exists, we need to try and update the stack
             stacks.append(stack_details.get("StackId"))
@@ -34,7 +36,8 @@ def deploy(config, stage):
             # The stack doesn't exist, so we need to create it
             stack_details = cloudformation.create_stack(
                 StackName=stack_name,
-                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json"
+                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
+                DisableRollback=disablerollback
             )
             stacks.append(stack_details.get("StackId"))
 
