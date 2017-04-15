@@ -25,8 +25,7 @@ def deploy(config, stage):
             )
             stack_details = cloudformation.update_stack(
                 StackName=stack_name,
-                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
-                DisableRollback=disablerollback
+                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json"
             )
             # The stack exists, we need to try and update the stack
             stacks.append(stack_details.get("StackId"))
@@ -72,5 +71,3 @@ def uploadDistFiles(bucket_name, stack_name, stage):
         s3.upload_file(file, bucket_name, stack_name + "/" + file.replace("./dist/", ""))
     uploaded_files = map(lambda x: stack_name + "/" + x, files_to_upload)
     return uploaded_files
-
-
