@@ -27,7 +27,8 @@ def deploy(config, stage):
             stack_details = cloudformation.update_stack(
                 StackName=stack_name,
                 TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
-                NotificationARNs=notification_arns
+                NotificationARNs=notification_arns,
+                RoleARN=config.get("iam_role", "")
             )
             # The stack exists, we need to try and update the stack
             stacks.append(stack_details.get("StackId"))
@@ -39,7 +40,8 @@ def deploy(config, stage):
                 StackName=stack_name,
                 TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
                 DisableRollback=disablerollback,
-                NotificationARNs=notification_arns
+                NotificationARNs=notification_arns,
+                RoleARN=config.get("iam_role", "")
             )
             stacks.append(stack_details.get("StackId"))
 
