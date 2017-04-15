@@ -14,6 +14,7 @@ def deploy(config, stage):
     uploaded_files = uploadDistFiles(bucket_name, stack_name, stage)
     print uploaded_files
     stacks = []
+    notification_arns = config.get("notification_arns", [])
     for region in regions:
         cloudformation = boto3.client('cloudformation', region_name=region)
 
@@ -25,7 +26,8 @@ def deploy(config, stage):
             )
             stack_details = cloudformation.update_stack(
                 StackName=stack_name,
-                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json"
+                TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
+                NotificationARNs=notification_arns
             )
             # The stack exists, we need to try and update the stack
             stacks.append(stack_details.get("StackId"))
@@ -36,7 +38,8 @@ def deploy(config, stage):
             stack_details = cloudformation.create_stack(
                 StackName=stack_name,
                 TemplateURL="http://" + bucket_name + ".s3.amazonaws.com/" + stack_name + "/" + stage + "/" + region + ".json",
-                DisableRollback=disablerollback
+                DisableRollback=disablerollback,
+                NotificationARNs=notification_arns
             )
             stacks.append(stack_details.get("StackId"))
 
