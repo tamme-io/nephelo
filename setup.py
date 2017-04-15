@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='nephelo',
-      version='0.107',
+      version='0.108',
       description='A Cloud Formation library to more easily. Nephelo, short for Nephelococcygia, is the art of watching clouds.',
       url='https://github.com/tamme-io/nephelo',
       author='tamme',
